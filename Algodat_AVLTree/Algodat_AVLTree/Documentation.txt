@@ -1,0 +1,18 @@
+﻿Dokumentation zu Methoden:
+
+AVLTree.Insert(int value):
+Diese Methode schaut zuerst ob head node null ist. Sollte das der Fall sein, ist die neue node die eingefügt wird
+jedenfalls der Head.
+Andernfalls wird eine Variable current generiert, die basierend auf den Regeln des Binären Suchbaums durch den Tree iteriert.
+Wenn die nächste Subnode rechts oder links gemäß den Regeln des Baumes null ist, wird an dieser Stelle die neue Node mit dem neu eingeführten Wert
+angelegt.
+
+TreeNode.CalculateBalanceFactor(TreeNode node):
+Diese Methode ruft pro Branch der von der Node ausgeht von der diese Methode aufgerufen wird, einmal die rekursive Methode
+IterateRecursively(TreeNode node, int iterationCount) auf und rechnet dann linker Branch - rechter Branch
+
+TreeNode.IterateRecursively(TreeNode node, int iterationCount):
+Diese Methode ist eine rekursive Hilfsmethode, welche eine Node als Parameter übergeben bekommt.
+Für den Fall das die angegebene Node selbst null ist, wird 0 zurückgegeben.
+Ist die Node selbst keine Null Referenz wird der iteration counter um 1 erhöht.
+Anschließend wird dieses Prozess für die beiden Child Nodes erneut durchgeführt, und iteriert so rekursiv durch den gesamten Ast.
