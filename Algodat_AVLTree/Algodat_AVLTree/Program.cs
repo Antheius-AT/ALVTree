@@ -31,7 +31,10 @@ namespace Algodat_AVLTree
             tree.Insert(4);
             Console.WriteLine(tree.HeadNode.BalanceFactor);
 
+            Console.WriteLine($"Minimum: {tree.Minimum.Content}");
             var removed = tree.Remove(4);
+
+            tree.Traverse(TraverseOrder.InOrder);
 
             Console.ReadLine();
         }

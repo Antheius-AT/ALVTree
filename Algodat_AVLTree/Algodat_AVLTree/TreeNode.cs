@@ -68,6 +68,17 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
+        /// Gets a value indicating whether the node is a leaf.
+        /// </summary>
+        public bool IsLeaf
+        {
+            get
+            {
+                return this.LeftSubNode == null && this.RightSubNode == null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the amount of times this nodes content is contained in the tree.
         /// </summary>
         public int ContentCount

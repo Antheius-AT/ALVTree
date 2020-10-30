@@ -16,6 +16,25 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
+        /// Gets the node containing the smallest value.
+        /// </summary>
+        public TreeNode Minimum
+        {
+            get
+            {
+                if (this.HeadNode == null)
+                    return null;
+
+                var current = this.HeadNode;
+
+                while (current.LeftSubNode != null)
+                    current = current.LeftSubNode;
+
+                return current;
+            }
+        }
+
+        /// <summary>
         /// Inserts a value into the tree.
         /// </summary>
         /// <param name="value">The value that is to be inserted.</param>
@@ -78,18 +97,21 @@ namespace Algodat_AVLTree
         /// <returns>The amount of times the specified value was removed from the tree.</returns>
         public int Remove(int value)
         {
-            throw new NotImplementedException();
-            var node = this.FindLastNodeBefore(this.HeadNode, value);
+            var node = this.FindNodeContainingValue(this.HeadNode, value);
 
             if (node == null)
                 return 0;
 
             var amountRemoved = node.ContentCount;
 
-            if (value < node.Content)
-                value = 10;
-            else
-                value = 10;
+            // either node is leaf, then simply remove it by null referencing it.
+            // or the node has only a left subnode, then replace the node with the let subnode
+            // or the node has only a right subnode, then replace the node with the right subnode.
+            // or the node has both, then search for the biggest node in the left subtree, null reference it, and switch the value.
+
+            return amountRemoved;
+
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -146,6 +168,21 @@ namespace Algodat_AVLTree
         /// </exception>
         public List<int> Traverse(TraverseOrder order)
         {
+            switch (order)
+            {
+                case TraverseOrder.PreOrder:
+                    return this.TraversePreOrder();
+                    break;
+                case TraverseOrder.InOrder:
+                    return this.TraverseInOrder(this.HeadNode);
+                    break;
+                case TraverseOrder.PostOrder:
+                    return this.TraversePostOrder();
+                    break;
+                default:
+                    break;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -167,7 +204,29 @@ namespace Algodat_AVLTree
                 return this.FindNodeContainingValue(currentNode.RightSubNode, value);
         }
 
-        protected virtual TreeNode FindLastNodeBefore(TreeNode currentNode, int value)
+        protected virtual void RebalanceTree()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected List<int> TraversePostOrder()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected List<int> TraverseInOrder(TreeNode current)
+        {
+            if (current != null)
+            {
+                Console.WriteLine(current.Content);
+                this.TraverseInOrder(current.LeftSubNode);
+                this.TraverseInOrder(current.RightSubNode);
+            }
+
+            return null;
+        }
+
+        protected List<int> TraversePreOrder()
         {
             throw new NotImplementedException();
         }

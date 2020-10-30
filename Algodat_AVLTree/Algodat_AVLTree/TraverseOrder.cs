@@ -7,7 +7,7 @@ namespace Algodat_AVLTree
     public enum TraverseOrder
     {
         PreOrder,
-        DefaultOrder,
+        InOrder,
         PostOrder
     }
 }
