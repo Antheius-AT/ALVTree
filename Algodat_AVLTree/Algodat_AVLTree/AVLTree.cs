@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Algodat_AVLTree
@@ -171,19 +173,14 @@ namespace Algodat_AVLTree
             switch (order)
             {
                 case TraverseOrder.PreOrder:
-                    return this.TraversePreOrder();
-                    break;
+                    return this.TraversePreOrder(this.HeadNode);
                 case TraverseOrder.InOrder:
                     return this.TraverseInOrder(this.HeadNode);
-                    break;
                 case TraverseOrder.PostOrder:
-                    return this.TraversePostOrder();
-                    break;
+                    return this.TraversePostOrder(this.HeadNode);
                 default:
-                    break;
+                    throw new ArgumentException(nameof(order), "Specified traverse order was not recognized.");
             }
-
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -209,26 +206,67 @@ namespace Algodat_AVLTree
             throw new NotImplementedException();
         }
 
-        protected List<int> TraversePostOrder()
+        /// <summary>
+        /// Traverses the tree using post order traversal.
+        /// </summary>
+        /// <param name="currentBaseNode">The node that is the current </param>
+        /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
+        /// <returns>A list containing all of the values present in the tree.</returns>
+        protected List<int> TraversePostOrder(TreeNode currentBaseNode, List<int> numbers = null)
         {
-            throw new NotImplementedException();
-        }
+            if (numbers == null)
+                numbers = new List<int>();
 
-        protected List<int> TraverseInOrder(TreeNode current)
-        {
-            if (current != null)
+            if (currentBaseNode != null)
             {
-                Console.WriteLine(current.Content);
-                this.TraverseInOrder(current.LeftSubNode);
-                this.TraverseInOrder(current.RightSubNode);
+                this.TraversePostOrder(currentBaseNode.LeftSubNode, numbers);
+                this.TraversePostOrder(currentBaseNode.RightSubNode, numbers);
+                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
             }
 
-            return null;
+            return numbers;
         }
 
-        protected List<int> TraversePreOrder()
+        /// <summary>
+        /// Traverses the tree using in order traversal.
+        /// </summary>
+        /// <param name="currentBaseNode">The node that is the current </param>
+        /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
+        /// <returns>A list containing all of the values present in the tree.</returns>
+        protected List<int> TraverseInOrder(TreeNode currentBaseNode, List<int> numbers = null)
         {
-            throw new NotImplementedException();
+            if (numbers == null)
+                numbers = new List<int>();
+
+            if (currentBaseNode != null)
+            {
+                this.TraverseInOrder(currentBaseNode.LeftSubNode, numbers);
+                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
+                this.TraverseInOrder(currentBaseNode.RightSubNode, numbers);
+            }
+
+            return numbers;
+        }
+
+        /// <summary>
+        /// Traverses the tree using pre order traversal.
+        /// </summary>
+        /// <param name="currentBaseNode">The node that is the current </param>
+        /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
+        /// <returns>A list containing all of the values present in the tree.</returns>
+        protected List<int> TraversePreOrder(TreeNode currentBaseNode, List<int> numbers = null)
+        {
+            if (numbers == null)
+                numbers = new List<int>();
+
+            if (currentBaseNode != null)
+            {
+                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
+                this.TraversePreOrder(currentBaseNode.LeftSubNode, numbers);
+                this.TraversePreOrder(currentBaseNode.RightSubNode, numbers);
+            }
+
+            return numbers;
         }
     }
 }

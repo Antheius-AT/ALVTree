@@ -18,6 +18,8 @@ namespace Algodat_AVLTree
             tree.Insert(2);
             tree.Insert(-10);
             tree.Insert(-5);
+            tree.Insert(4);
+            tree.Insert(4);
 
             Console.WriteLine(tree.HeadNode.BalanceFactor);
 
@@ -31,10 +33,30 @@ namespace Algodat_AVLTree
             tree.Insert(4);
             Console.WriteLine(tree.HeadNode.BalanceFactor);
 
-            Console.WriteLine($"Minimum: {tree.Minimum.Content}");
-            var removed = tree.Remove(4);
 
-            tree.Traverse(TraverseOrder.InOrder);
+            Console.WriteLine($"Minimum: {tree.Minimum.Content}");
+
+            var numbersInOrder = tree.Traverse(TraverseOrder.InOrder);
+
+            Console.WriteLine("In Order:");
+            foreach (var item in numbersInOrder)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("Post Order");
+            var numbersPostOrder = tree.Traverse(TraverseOrder.PostOrder);
+            foreach (var item in numbersPostOrder)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("Pree Order");
+            var numbersPreeOrder = tree.Traverse(TraverseOrder.PreOrder);
+            foreach (var item in numbersPreeOrder)
+            {
+                Console.WriteLine(item);
+            }
 
             Console.ReadLine();
         }
