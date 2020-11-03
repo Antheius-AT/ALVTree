@@ -34,10 +34,14 @@ namespace Algodat_AVLTree
             Console.WriteLine(tree.HeadNode.BalanceFactor);
 
 
-            Console.WriteLine($"Minimum: {tree.Minimum.Content}");
+            Console.WriteLine($"Minimum: {tree.GetSubtreeMinimum(tree.HeadNode).Content}");
 
+            Console.ReadLine();
+        }
+
+        private static void Print(AVLTree tree)
+        {
             var numbersInOrder = tree.Traverse(TraverseOrder.InOrder);
-
             Console.WriteLine("In Order:");
             foreach (var item in numbersInOrder)
             {
@@ -57,8 +61,6 @@ namespace Algodat_AVLTree
             {
                 Console.WriteLine(item);
             }
-
-            Console.ReadLine();
         }
     }
 }

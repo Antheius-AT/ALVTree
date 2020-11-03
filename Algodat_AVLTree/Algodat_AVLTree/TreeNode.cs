@@ -37,6 +37,7 @@ namespace Algodat_AVLTree
 
         /// <summary>
         /// Represents the parent node. If this property is null, the current node is the root of the tree.
+        /// If the parent node is set
         /// </summary>
         public TreeNode ParentNode
         {
@@ -45,7 +46,9 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Gets this nodes balance factor.
+        /// Gets this nodes balance factor. 
+        /// A negative balance factor means, that the node`s subtree is right heavy.
+        /// A positive balance factor means, that the node`s subtree is left heavy.
         /// </summary>
         public int BalanceFactor
         {
@@ -97,6 +100,11 @@ namespace Algodat_AVLTree
             }
         }
 
+        public override string ToString()
+        {
+            return $"Content: {this.Content}, Content count: {this.ContentCount}, BalanceFactor: {this.BalanceFactor}";
+        }
+
         /// <summary>
         /// Helper method that calculates the balance factor for this particular node using recursion.
         /// </summary>
@@ -122,11 +130,12 @@ namespace Algodat_AVLTree
                 return iterationCount;
 
             iterationCount += 1;
+            var left = this.IterateRecursively(node.LeftSubNode, iterationCount);
+            var right = this.IterateRecursively(node.RightSubNode, iterationCount);
 
-            iterationCount = this.IterateRecursively(node.LeftSubNode, iterationCount);
-            iterationCount = this.IterateRecursively(node.RightSubNode, iterationCount);
-
-            return iterationCount;
+            // Math.Max because I dont want the subtree depths to be added, but rather 
+            // I want to check which subtree is the greatest.
+            return Math.Max(left, right);
         }
     }
 }

@@ -18,25 +18,6 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Gets the node containing the smallest value.
-        /// </summary>
-        public TreeNode Minimum
-        {
-            get
-            {
-                if (this.HeadNode == null)
-                    return null;
-
-                var current = this.HeadNode;
-
-                while (current.LeftSubNode != null)
-                    current = current.LeftSubNode;
-
-                return current;
-            }
-        }
-
-        /// <summary>
         /// Inserts a value into the tree.
         /// </summary>
         /// <param name="value">The value that is to be inserted.</param>
@@ -86,6 +67,9 @@ namespace Algodat_AVLTree
                         break;
                     }
                 }
+
+                // Muss hier alle Balance counts prüfen.
+                this.RebalanceTree();
             }
         }
 
@@ -106,6 +90,11 @@ namespace Algodat_AVLTree
 
             var amountRemoved = node.ContentCount;
 
+            if (!node.IsLeaf)
+                this.PrepareNodeDeletion(node);
+
+            this.DeleteNode(node);
+
             // either node is leaf, then simply remove it by null referencing it.
             // or the node has only a left subnode, then replace the node with the let subnode
             // or the node has only a right subnode, then replace the node with the right subnode.
@@ -114,6 +103,40 @@ namespace Algodat_AVLTree
             return amountRemoved;
 
             throw new NotImplementedException();
+        }
+
+        protected virtual void PrepareNodeDeletion(TreeNode toDelete)
+        {
+            if (toDelete.LeftSubNode == null)
+            {
+                toDelete.Content = toDelete.RightSubNode.Content;
+                toDelete.RightSubNode.ParentNode = null;
+                toDelete.LeftSubNode = toDelete.RightSubNode.LeftSubNode;
+                toDelete.RightSubNode = toDelete.RightSubNode.RightSubNode;
+            }
+            else if (toDelete.RightSubNode == null)
+            {
+                toDelete.Content = toDelete.LeftSubNode.Content;
+                toDelete.LeftSubNode.ParentNode = null;
+                toDelete.LeftSubNode = toDelete.LeftSubNode.LeftSubNode;
+                toDelete.RightSubNode = toDelete.LeftSubNode.RightSubNode;
+            }
+            else
+            {
+                var biggestSubtreeNode = this.GetSubtreeMaximum(toDelete.LeftSubNode);
+                toDelete.Content = biggestSubtreeNode.Content;
+                biggestSubtreeNode.ParentNode.RightSubNode = null;
+                biggestSubtreeNode.ParentNode = null;
+            }
+        }
+
+        protected void DeleteNode(TreeNode toDelete)
+        {
+            if (toDelete == null)
+                throw new ArgumentNullException(nameof(toDelete), "Cant delete a null reference.");
+
+            if (toDelete.IsLeaf)
+                toDelete = null;
         }
 
         /// <summary>
@@ -130,7 +153,10 @@ namespace Algodat_AVLTree
         /// <returns>The amount of elements.</returns>
         public int Count()
         {
-            throw new NotImplementedException();
+            if (this.HeadNode == null)
+                return 0;
+
+            return this.TraverseInOrder(this.HeadNode).Count();
         }
 
         /// <summary>
@@ -173,14 +199,57 @@ namespace Algodat_AVLTree
             switch (order)
             {
                 case TraverseOrder.PreOrder:
-                    return this.TraversePreOrder(this.HeadNode);
+                    return this.TraversePreOrder(this.HeadNode).ExtractContents();
                 case TraverseOrder.InOrder:
-                    return this.TraverseInOrder(this.HeadNode);
+                    return this.TraverseInOrder(this.HeadNode).ExtractContents();
                 case TraverseOrder.PostOrder:
-                    return this.TraversePostOrder(this.HeadNode);
+                    return this.TraversePostOrder(this.HeadNode).ExtractContents();
                 default:
                     throw new ArgumentException(nameof(order), "Specified traverse order was not recognized.");
             }
+        }
+
+        /// <summary>
+        /// Gets the node with the greatest value, starting from a specified node.
+        /// </summary>
+        /// <param name="start">The node to start from.</param>
+        /// <returns>The tree node with the greatest value.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if starting node is null.
+        /// </exception>
+        public TreeNode GetSubtreeMaximum(TreeNode start)
+        {
+            if (start == null)
+                throw new ArgumentNullException(nameof(start), "Starting node was null.");
+
+            var current = start;
+
+            while (current.RightSubNode != null)
+                current = current.RightSubNode;
+
+            return current;
+        }
+
+        /// <summary>
+        /// Gets the node with the lowest value, starting from a specified node.
+        /// </summary>
+        /// <param name="start">The node to start from.</param>
+        /// <returns>The tree node with the lowest value.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if starting node is null.
+        /// </exception>
+        public TreeNode GetSubtreeMinimum(TreeNode start)
+        {
+            if (start == null)
+                throw new ArgumentNullException(nameof(start), "Starting node was null.");
+
+            var current = start;
+
+            while (current.LeftSubNode != null)
+                current = current.LeftSubNode;
+
+            return current;
+
         }
 
         /// <summary>
@@ -203,7 +272,26 @@ namespace Algodat_AVLTree
 
         protected virtual void RebalanceTree()
         {
-            throw new NotImplementedException();
+            var nodes = this.TraversePreOrder(this.HeadNode);
+
+            for (int i = nodes.Count - 1; i >= 0; i--)
+            {
+                if (nodes[i].BalanceFactor.IsBetween(-1, 1))
+                    continue;
+
+                var rotation = this.DetermineRotation(nodes[i]);
+                rotation.Invoke(nodes[i]);
+                break;
+            }
+
+            //foreach (var item in nodes)
+            //{
+            //    if (item.BalanceFactor.IsBetween(-1, 1))
+            //        continue;
+
+            //    var rotation = this.DetermineRotation(item);
+            //    rotation.Invoke(item);
+            //}
         }
 
         /// <summary>
@@ -212,16 +300,16 @@ namespace Algodat_AVLTree
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
         /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<int> TraversePostOrder(TreeNode currentBaseNode, List<int> numbers = null)
+        protected List<TreeNode> TraversePostOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
-                numbers = new List<int>();
+                numbers = new List<TreeNode>();
 
             if (currentBaseNode != null)
             {
                 this.TraversePostOrder(currentBaseNode.LeftSubNode, numbers);
                 this.TraversePostOrder(currentBaseNode.RightSubNode, numbers);
-                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
+                numbers.Add(currentBaseNode);
             }
 
             return numbers;
@@ -233,15 +321,15 @@ namespace Algodat_AVLTree
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
         /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<int> TraverseInOrder(TreeNode currentBaseNode, List<int> numbers = null)
+        protected List<TreeNode> TraverseInOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
-                numbers = new List<int>();
+                numbers = new List<TreeNode>();
 
             if (currentBaseNode != null)
             {
                 this.TraverseInOrder(currentBaseNode.LeftSubNode, numbers);
-                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
+                numbers.Add(currentBaseNode);
                 this.TraverseInOrder(currentBaseNode.RightSubNode, numbers);
             }
 
@@ -254,19 +342,92 @@ namespace Algodat_AVLTree
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
         /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<int> TraversePreOrder(TreeNode currentBaseNode, List<int> numbers = null)
+        protected List<TreeNode> TraversePreOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
-                numbers = new List<int>();
+                numbers = new List<TreeNode>();
 
             if (currentBaseNode != null)
             {
-                numbers.AddRange(Enumerable.Repeat(currentBaseNode.Content, currentBaseNode.ContentCount));
+                numbers.Add(currentBaseNode);
                 this.TraversePreOrder(currentBaseNode.LeftSubNode, numbers);
                 this.TraversePreOrder(currentBaseNode.RightSubNode, numbers);
             }
 
             return numbers;
+        }
+
+        /// <summary>
+        /// Determines which type of rotation a tree node needs, in order to be balanced.
+        /// </summary>
+        /// <param name="node">The tree node that needs rebalancing.</param>
+        /// <returns>A delegate pointing to the correct rotation method to rebalance the node.</returns>
+        protected virtual Action<TreeNode> DetermineRotation(TreeNode node)
+        {
+            if (node.BalanceFactor.IsBetween(-1, 1))
+                throw new ArgumentException(nameof(node), "The node does not need a rotation");
+
+            if (node.BalanceFactor < 0)
+            {
+                if (node.RightSubNode.BalanceFactor > 0)
+                    return this.DoubleLeftRotation;
+                else
+                    return this.SingleLeftRotation;
+            }
+            else
+            {
+                if (node.LeftSubNode.BalanceFactor < 0)
+                    return this.DoubleRightRotation;
+                else
+                    return this.SingleRightRotation;
+            }
+        }
+
+        protected virtual void SingleLeftRotation(TreeNode rotationAxis)
+        {
+            var newRoot = rotationAxis.RightSubNode;
+
+            newRoot.ParentNode = rotationAxis.ParentNode;
+
+            if (newRoot.ParentNode == null)
+                this.HeadNode = newRoot;
+            else if (newRoot.Content < newRoot.ParentNode.Content)
+                newRoot.ParentNode.LeftSubNode = newRoot;
+            else
+                newRoot.ParentNode.RightSubNode = newRoot;
+
+            rotationAxis.RightSubNode = newRoot.LeftSubNode;
+            newRoot.LeftSubNode = rotationAxis;
+            rotationAxis.ParentNode = newRoot;
+        }
+
+        protected virtual void DoubleLeftRotation(TreeNode rotationAxis)
+        {
+            this.SingleRightRotation(rotationAxis.RightSubNode);
+            this.SingleLeftRotation(rotationAxis);
+        }
+
+        protected virtual void SingleRightRotation(TreeNode rotationAxis)
+        {
+            var newRoot = rotationAxis.LeftSubNode;
+            newRoot.ParentNode = rotationAxis.ParentNode;
+
+            if (newRoot.ParentNode == null)
+                this.HeadNode = newRoot;
+            else if (newRoot.Content > newRoot.ParentNode.Content)
+                newRoot.ParentNode.RightSubNode = newRoot;
+            else
+                newRoot.ParentNode.LeftSubNode = newRoot;
+
+            rotationAxis.LeftSubNode = newRoot.RightSubNode;
+            rotationAxis.ParentNode = newRoot;
+            newRoot.RightSubNode = rotationAxis;
+        }
+
+        protected virtual void DoubleRightRotation(TreeNode rotationAxis)
+        {
+            this.SingleLeftRotation(rotationAxis.LeftSubNode);
+            this.SingleRightRotation(rotationAxis);
         }
     }
 }
