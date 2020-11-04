@@ -16,6 +16,12 @@ namespace Algodat_AVLTree
             tree.Insert(16);
             tree.Insert(4);
             tree.Insert(2);
+
+            tree.Remove(7);
+            tree.Remove(16);
+            tree.Remove(14);
+            tree.Remove(4);
+
             tree.Insert(-10);
             tree.Insert(-5);
             tree.Insert(4);
@@ -36,6 +42,9 @@ namespace Algodat_AVLTree
 
             Console.WriteLine($"Minimum: {tree.GetSubtreeMinimum(tree.HeadNode).Content}");
 
+            tree.Clear();
+            var amount = tree.Remove(4);
+            var anotherAmount = tree.Remove(1000);
             Console.ReadLine();
         }
 

@@ -68,7 +68,6 @@ namespace Algodat_AVLTree
                     }
                 }
 
-                // Muss hier alle Balance counts prüfen.
                 this.RebalanceTree();
             }
         }
@@ -89,54 +88,22 @@ namespace Algodat_AVLTree
                 return 0;
 
             var amountRemoved = node.ContentCount;
-
-            if (!node.IsLeaf)
-                this.PrepareNodeDeletion(node);
-
-            this.DeleteNode(node);
+            var deletionMethod = this.DetermineDeletionMethod(node);
+            deletionMethod.Invoke(node);
 
             // either node is leaf, then simply remove it by null referencing it.
-            // or the node has only a left subnode, then replace the node with the let subnode
+            // or the node has only a left subnode, then replace the node with the left subnode
             // or the node has only a right subnode, then replace the node with the right subnode.
-            // or the node has both, then search for the biggest node in the left subtree, null reference it, and switch the value.
-
+            // or the node has both, then search for the biggest node in the left subtree, copy its value into node to delete, and set a reference to its left
+            // child element from its parent element.
+            this.RebalanceTree();
             return amountRemoved;
-
-            throw new NotImplementedException();
-        }
-
-        protected virtual void PrepareNodeDeletion(TreeNode toDelete)
-        {
-            if (toDelete.LeftSubNode == null)
-            {
-                toDelete.Content = toDelete.RightSubNode.Content;
-                toDelete.RightSubNode.ParentNode = null;
-                toDelete.LeftSubNode = toDelete.RightSubNode.LeftSubNode;
-                toDelete.RightSubNode = toDelete.RightSubNode.RightSubNode;
-            }
-            else if (toDelete.RightSubNode == null)
-            {
-                toDelete.Content = toDelete.LeftSubNode.Content;
-                toDelete.LeftSubNode.ParentNode = null;
-                toDelete.LeftSubNode = toDelete.LeftSubNode.LeftSubNode;
-                toDelete.RightSubNode = toDelete.LeftSubNode.RightSubNode;
-            }
-            else
-            {
-                var biggestSubtreeNode = this.GetSubtreeMaximum(toDelete.LeftSubNode);
-                toDelete.Content = biggestSubtreeNode.Content;
-                biggestSubtreeNode.ParentNode.RightSubNode = null;
-                biggestSubtreeNode.ParentNode = null;
-            }
         }
 
         protected void DeleteNode(TreeNode toDelete)
         {
             if (toDelete == null)
                 throw new ArgumentNullException(nameof(toDelete), "Cant delete a null reference.");
-
-            if (toDelete.IsLeaf)
-                toDelete = null;
         }
 
         /// <summary>
@@ -383,8 +350,38 @@ namespace Algodat_AVLTree
             }
         }
 
+        /// <summary>
+        /// Determines the correct deletion method to delete a specified node.
+        /// </summary>
+        /// <param name="node">The node to delete.</param>
+        /// <returns>The correct deletion method.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// Is thrown if node is null.
+        /// </exception>
+        protected virtual Action<TreeNode> DetermineDeletionMethod(TreeNode node)
+        {
+            if (node == null)
+                throw new ArgumentNullException(nameof(node), "Node to delete must not be null.");
+
+            if (node.IsLeaf)
+                return this.LeafDeletion;
+            else if (node.LeftSubNode == null && node.RightSubNode != null)
+                return this.NodeWithRightSubnodeDeletion;
+            else if (node.LeftSubNode != null && node.RightSubNode == null)
+                return this.NodeWithLeftSubnodeDeletion;
+            else
+                return this.NodeWithBothSubnodesDeletion;
+        }
+
+        /// <summary>
+        /// Performs a single left rotation on a specified node.
+        /// </summary>
+        /// <param name="rotationAxis">The node to be rotated around.</param>
         protected virtual void SingleLeftRotation(TreeNode rotationAxis)
         {
+            if (rotationAxis == null)
+                throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
+
             var newRoot = rotationAxis.RightSubNode;
 
             newRoot.ParentNode = rotationAxis.ParentNode;
@@ -397,18 +394,39 @@ namespace Algodat_AVLTree
                 newRoot.ParentNode.RightSubNode = newRoot;
 
             rotationAxis.RightSubNode = newRoot.LeftSubNode;
+
+            // If the element exists make sure that the new child element parent reference is updated.
+            if (newRoot.LeftSubNode != null)
+                newRoot.LeftSubNode.ParentNode = rotationAxis;
+
             newRoot.LeftSubNode = rotationAxis;
+            newRoot.LeftSubNode.ParentNode = rotationAxis.RightSubNode;
+
             rotationAxis.ParentNode = newRoot;
         }
 
+        /// <summary>
+        /// Performs a double left rotation on a specified node.
+        /// </summary>
+        /// <param name="rotationAxis">The node to be rotated around.</param>
         protected virtual void DoubleLeftRotation(TreeNode rotationAxis)
         {
+            if (rotationAxis == null)
+                throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
+
             this.SingleRightRotation(rotationAxis.RightSubNode);
             this.SingleLeftRotation(rotationAxis);
         }
 
+        /// <summary>
+        /// Performs a single right rotation on a specified node.
+        /// </summary>
+        /// <param name="rotationAxis">The node to be rotated around.</param>
         protected virtual void SingleRightRotation(TreeNode rotationAxis)
         {
+            if (rotationAxis == null)
+                throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
+
             var newRoot = rotationAxis.LeftSubNode;
             newRoot.ParentNode = rotationAxis.ParentNode;
 
@@ -420,14 +438,125 @@ namespace Algodat_AVLTree
                 newRoot.ParentNode.LeftSubNode = newRoot;
 
             rotationAxis.LeftSubNode = newRoot.RightSubNode;
+
+            // If the element exists make sure that the new child element parent reference is updated.
+            if (newRoot.RightSubNode != null)
+                newRoot.RightSubNode.ParentNode = rotationAxis;
+
             rotationAxis.ParentNode = newRoot;
             newRoot.RightSubNode = rotationAxis;
         }
 
+        /// <summary>
+        /// Performs a double right rotation on a specified node.
+        /// </summary>
+        /// <param name="rotationAxis">The node to be rotated around.</param>
         protected virtual void DoubleRightRotation(TreeNode rotationAxis)
         {
+            if (rotationAxis == null)
+                throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
+
             this.SingleLeftRotation(rotationAxis.LeftSubNode);
             this.SingleRightRotation(rotationAxis);
+        }
+
+        /// <summary>
+        /// Deletion method to delete a tree leaf.
+        /// </summary>
+        /// <param name="toDelete">The node to delete.</param>
+        /// <exception cref="ArgumentException">
+        /// Thrown if node is not a leaf node.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Is thrown if specified node to delete is null.
+        /// </exception>
+        protected virtual void LeafDeletion(TreeNode toDelete)
+        {
+            if (toDelete == null)
+                throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
+
+            if (!toDelete.IsLeaf)
+                throw new ArgumentException(nameof(toDelete), "Node must be a leaf to use this deletion mechanism.");
+
+            if (toDelete.ParentNode == null)
+                this.HeadNode = null;
+            else if (toDelete.Content < toDelete.ParentNode.Content)
+                toDelete.ParentNode.LeftSubNode = null;
+            else
+                toDelete.ParentNode.RightSubNode = null;
+        }
+
+        protected virtual void NodeWithLeftSubnodeDeletion(TreeNode toDelete)
+        {
+            if (toDelete == null)
+                throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
+
+            if (toDelete.RightSubNode != null || toDelete.LeftSubNode == null)
+                throw new ArgumentException(nameof(toDelete), "Node must only possess a left subnode to be deleted via this deletion mechanism.");
+
+            if (toDelete.ParentNode == null)
+                this.HeadNode = toDelete.LeftSubNode;
+            else
+            {
+                // Check whether deleted node is a left or right subnode in relation to its parent, to correctly set the new references.
+                if (toDelete.Content < toDelete.ParentNode.Content)
+                {
+                    toDelete.ParentNode.LeftSubNode = toDelete.LeftSubNode;
+                }
+                else
+                {
+                    toDelete.ParentNode.RightSubNode = toDelete.LeftSubNode;
+                }
+
+                toDelete.LeftSubNode.ParentNode = toDelete.ParentNode;
+            }
+        }
+
+        protected virtual void NodeWithRightSubnodeDeletion(TreeNode toDelete)
+        {
+            if (toDelete == null)
+                throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
+
+            if (toDelete.LeftSubNode != null || toDelete.RightSubNode == null)
+                throw new ArgumentException(nameof(toDelete), "Node must only possess a left subnode to be deleted via this deletion mechanism.");
+
+            if (toDelete.ParentNode == null)
+                this.HeadNode = toDelete.RightSubNode;
+            else
+            {
+                // Check whether deleted node is a left or right subnode in relation to its parent, to correctly set the new references.
+                if (toDelete.Content < toDelete.ParentNode.Content)
+                {
+                    toDelete.ParentNode.LeftSubNode = toDelete.RightSubNode;
+                }
+                else
+                {
+                    toDelete.ParentNode.RightSubNode = toDelete.RightSubNode;
+                }
+
+                toDelete.RightSubNode.ParentNode = toDelete.ParentNode;
+            }
+        }
+
+        protected virtual void NodeWithBothSubnodesDeletion(TreeNode toDelete)
+        {
+            if (toDelete == null)
+                throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
+
+            if (toDelete.LeftSubNode == null || toDelete.RightSubNode == null)
+                throw new ArgumentException(nameof(toDelete), "Node must possess subnode on both sides to be deleted via this deletion mechanism.");
+
+            var greatestSubtreeNode = this.GetSubtreeMaximum(toDelete.LeftSubNode);
+
+            toDelete.Content = greatestSubtreeNode.Content;
+            greatestSubtreeNode.ParentNode.RightSubNode = greatestSubtreeNode.LeftSubNode;
+
+            if (greatestSubtreeNode.LeftSubNode != null)
+            {
+                greatestSubtreeNode.LeftSubNode.ParentNode = greatestSubtreeNode.ParentNode;
+            }
+
+            greatestSubtreeNode.ParentNode = null;
         }
     }
 }
