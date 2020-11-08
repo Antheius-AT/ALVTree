@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "AVLTreeVisualizer/1.0.0": {
+        "dependencies": {
+          "Algodat_AVLTree": "1.0.0.0"
+        },
+        "runtime": {
+          "AVLTreeVisualizer.dll": {}
+        }
+      },
+      "Algodat_AVLTree/1.0.0.0": {
+        "runtime": {
+          "Algodat_AVLTree.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AVLTreeVisualizer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Algodat_AVLTree/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

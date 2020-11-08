@@ -100,12 +100,6 @@ namespace Algodat_AVLTree
             return amountRemoved;
         }
 
-        protected void DeleteNode(TreeNode toDelete)
-        {
-            if (toDelete == null)
-                throw new ArgumentNullException(nameof(toDelete), "Cant delete a null reference.");
-        }
-
         /// <summary>
         /// Removes all values from the tree.
         /// </summary>
@@ -237,6 +231,9 @@ namespace Algodat_AVLTree
                 return this.FindNodeContainingValue(currentNode.RightSubNode, value);
         }
 
+        /// <summary>
+        /// Method to rebalance the AVL tree.
+        /// </summary>
         protected virtual void RebalanceTree()
         {
             var nodes = this.TraversePreOrder(this.HeadNode);
@@ -250,15 +247,6 @@ namespace Algodat_AVLTree
                 rotation.Invoke(nodes[i]);
                 break;
             }
-
-            //foreach (var item in nodes)
-            //{
-            //    if (item.BalanceFactor.IsBetween(-1, 1))
-            //        continue;
-
-            //    var rotation = this.DetermineRotation(item);
-            //    rotation.Invoke(item);
-            //}
         }
 
         /// <summary>
@@ -486,6 +474,16 @@ namespace Algodat_AVLTree
                 toDelete.ParentNode.RightSubNode = null;
         }
 
+        /// <summary>
+        /// Deletion method to delete a method with only a left subtree.
+        /// </summary>
+        /// <param name="toDelete">The node to delete.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if node to delete is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if node to delete does not have only a left subtree.
+        /// </exception>
         protected virtual void NodeWithLeftSubnodeDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
@@ -512,6 +510,16 @@ namespace Algodat_AVLTree
             }
         }
 
+        /// <summary>
+        /// Deletion method to delete a method with only a right subtree.
+        /// </summary>
+        /// <param name="toDelete">The node to delete.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if node to delete is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if node to delete does not have only a right subtree.
+        /// </exception>
         protected virtual void NodeWithRightSubnodeDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
@@ -538,6 +546,16 @@ namespace Algodat_AVLTree
             }
         }
 
+        /// <summary>
+        /// Deletion method to delete a method with a subtree on each of its sides.
+        /// </summary>
+        /// <param name="toDelete">The node to delete.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if node to delete is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown if node to delete does not have a subtree on each of its sides.
+        /// </exception>
         protected virtual void NodeWithBothSubnodesDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
