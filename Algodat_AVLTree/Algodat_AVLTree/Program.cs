@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace Algodat_AVLTree
@@ -15,7 +16,14 @@ namespace Algodat_AVLTree
             tree.Insert(25);
             tree.Insert(5);
             tree.Insert(7);
+            tree.Insert(5);
+            tree.Insert(5);
 
+            tree.Count();
+
+            tree.Traverse((TraverseOrder)10);
+
+            var list = tree.Traverse(TraverseOrder.PostOrder);
             tree.Remove(10);
         }
     }

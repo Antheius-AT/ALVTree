@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algodat_AVLTree", "Algodat_AVLTree\Algodat_AVLTree.csproj", "{BD99C7E4-A34E-47F0-BCC7-EE9479651E38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algodat_AVLTree", "Algodat_AVLTree\Algodat_AVLTree.csproj", "{BD99C7E4-A34E-47F0-BCC7-EE9479651E38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVLTree_Test", "AVLTree_Test\AVLTree_Test.csproj", "{E75D1287-7A7D-4B43-B155-389C4E24BB7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BD99C7E4-A34E-47F0-BCC7-EE9479651E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD99C7E4-A34E-47F0-BCC7-EE9479651E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD99C7E4-A34E-47F0-BCC7-EE9479651E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75D1287-7A7D-4B43-B155-389C4E24BB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75D1287-7A7D-4B43-B155-389C4E24BB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75D1287-7A7D-4B43-B155-389C4E24BB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75D1287-7A7D-4B43-B155-389C4E24BB7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

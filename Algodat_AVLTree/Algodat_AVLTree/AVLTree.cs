@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace Algodat_AVLTree
 {
@@ -76,9 +73,6 @@ namespace Algodat_AVLTree
         /// Removes a value from the tree.
         /// </summary>
         /// <param name="value">The value that is to be removed.</param>
-        /// <exception cref="ArgumentException">
-        /// Thrown if the value does not exist.
-        /// </exception>
         /// <returns>The amount of times the specified value was removed from the tree.</returns>
         public int Remove(int value)
         {
@@ -117,7 +111,7 @@ namespace Algodat_AVLTree
             if (this.HeadNode == null)
                 return 0;
 
-            return this.TraverseInOrder(this.HeadNode).Count();
+            return this.TraverseInOrder(this.HeadNode).ExtractContents().Count;
         }
 
         /// <summary>
@@ -178,7 +172,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentNullException">
         /// Thrown if starting node is null.
         /// </exception>
-        public TreeNode GetSubtreeMaximum(TreeNode start)
+        private TreeNode GetSubtreeMaximum(TreeNode start)
         {
             if (start == null)
                 throw new ArgumentNullException(nameof(start), "Starting node was null.");
@@ -192,35 +186,13 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Gets the node with the lowest value, starting from a specified node.
-        /// </summary>
-        /// <param name="start">The node to start from.</param>
-        /// <returns>The tree node with the lowest value.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if starting node is null.
-        /// </exception>
-        public TreeNode GetSubtreeMinimum(TreeNode start)
-        {
-            if (start == null)
-                throw new ArgumentNullException(nameof(start), "Starting node was null.");
-
-            var current = start;
-
-            while (current.LeftSubNode != null)
-                current = current.LeftSubNode;
-
-            return current;
-
-        }
-
-        /// <summary>
         /// Helper method that looks for a node containing a specific value. If the value is found
         /// returns the node containing the value. If the value is not found, returns a null reference.
         /// </summary>
         /// <param name="currentNode">The node that is currently being navigated from.</param>
         /// <param name="value">The value that is searched for.</param>
         /// <returns>The node containing the value, if present. Otherwise a null reference.</returns>
-        protected virtual TreeNode FindNodeContainingValue(TreeNode currentNode, int value)
+        private TreeNode FindNodeContainingValue(TreeNode currentNode, int value)
         {
             if (currentNode == null || currentNode.Content == value)
                 return currentNode;
@@ -234,7 +206,7 @@ namespace Algodat_AVLTree
         /// <summary>
         /// Method to rebalance the AVL tree.
         /// </summary>
-        protected virtual void RebalanceTree()
+        private void RebalanceTree()
         {
             var nodes = this.TraversePreOrder(this.HeadNode);
 
@@ -250,12 +222,14 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Traverses the tree using post order traversal.
+        /// Traverses the tree using post order traversal. Caution, given the nature of the implementation of this tree,
+        /// multiple copies of the same value are not stored as separate nodes, but rather as an internal counter 
+        /// of the tree node object, which can be read via the <see cref="TreeNode.ContentCount"/> property.
         /// </summary>
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
         /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<TreeNode> TraversePostOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
+        private List<TreeNode> TraversePostOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
                 numbers = new List<TreeNode>();
@@ -271,12 +245,14 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Traverses the tree using in order traversal.
+        /// Traverses the tree using in order traversal. Caution, given the nature of the implementation of this tree,
+        /// multiple copies of the same value are not stored as separate nodes, but rather as an internal counter 
+        /// of the tree node object, which can be read via the <see cref="TreeNode.ContentCount"/> property.
         /// </summary>
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
-        /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<TreeNode> TraverseInOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
+        /// <returns>A list containing all of the nodes present in the tree.</returns>
+        private List<TreeNode> TraverseInOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
                 numbers = new List<TreeNode>();
@@ -292,12 +268,14 @@ namespace Algodat_AVLTree
         }
 
         /// <summary>
-        /// Traverses the tree using pre order traversal.
+        /// Traverses the tree using pre order traversal. Caution, given the nature of the implementation of this tree,
+        /// multiple copies of the same value are not stored as separate nodes, but rather as an internal counter 
+        /// of the tree node object, which can be read via the <see cref="TreeNode.ContentCount"/> property.
         /// </summary>
         /// <param name="currentBaseNode">The node that is the current </param>
         /// <param name="numbers">The list in which to store the numbers. Needed for recursion.</param>
         /// <returns>A list containing all of the values present in the tree.</returns>
-        protected List<TreeNode> TraversePreOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
+        private List<TreeNode> TraversePreOrder(TreeNode currentBaseNode, List<TreeNode> numbers = null)
         {
             if (numbers == null)
                 numbers = new List<TreeNode>();
@@ -317,7 +295,7 @@ namespace Algodat_AVLTree
         /// </summary>
         /// <param name="node">The tree node that needs rebalancing.</param>
         /// <returns>A delegate pointing to the correct rotation method to rebalance the node.</returns>
-        protected virtual Action<TreeNode> DetermineRotation(TreeNode node)
+        private Action<TreeNode> DetermineRotation(TreeNode node)
         {
             if (node.BalanceFactor.IsBetween(-1, 1))
                 throw new ArgumentException(nameof(node), "The node does not need a rotation");
@@ -346,7 +324,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentNullException">
         /// Is thrown if node is null.
         /// </exception>
-        protected virtual Action<TreeNode> DetermineDeletionMethod(TreeNode node)
+        private Action<TreeNode> DetermineDeletionMethod(TreeNode node)
         {
             if (node == null)
                 throw new ArgumentNullException(nameof(node), "Node to delete must not be null.");
@@ -365,7 +343,7 @@ namespace Algodat_AVLTree
         /// Performs a single left rotation on a specified node.
         /// </summary>
         /// <param name="rotationAxis">The node to be rotated around.</param>
-        protected virtual void SingleLeftRotation(TreeNode rotationAxis)
+        private void SingleLeftRotation(TreeNode rotationAxis)
         {
             if (rotationAxis == null)
                 throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
@@ -397,7 +375,7 @@ namespace Algodat_AVLTree
         /// Performs a double left rotation on a specified node.
         /// </summary>
         /// <param name="rotationAxis">The node to be rotated around.</param>
-        protected virtual void DoubleLeftRotation(TreeNode rotationAxis)
+        private void DoubleLeftRotation(TreeNode rotationAxis)
         {
             if (rotationAxis == null)
                 throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
@@ -410,7 +388,7 @@ namespace Algodat_AVLTree
         /// Performs a single right rotation on a specified node.
         /// </summary>
         /// <param name="rotationAxis">The node to be rotated around.</param>
-        protected virtual void SingleRightRotation(TreeNode rotationAxis)
+        private void SingleRightRotation(TreeNode rotationAxis)
         {
             if (rotationAxis == null)
                 throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
@@ -439,7 +417,7 @@ namespace Algodat_AVLTree
         /// Performs a double right rotation on a specified node.
         /// </summary>
         /// <param name="rotationAxis">The node to be rotated around.</param>
-        protected virtual void DoubleRightRotation(TreeNode rotationAxis)
+        private void DoubleRightRotation(TreeNode rotationAxis)
         {
             if (rotationAxis == null)
                 throw new ArgumentNullException(nameof(rotationAxis), "Node to delete must not be null.");
@@ -458,7 +436,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentNullException">
         /// Is thrown if specified node to delete is null.
         /// </exception>
-        protected virtual void LeafDeletion(TreeNode toDelete)
+        private void LeafDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
                 throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
@@ -484,7 +462,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentException">
         /// Thrown if node to delete does not have only a left subtree.
         /// </exception>
-        protected virtual void NodeWithLeftSubnodeDeletion(TreeNode toDelete)
+        private void NodeWithLeftSubnodeDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
                 throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
@@ -520,7 +498,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentException">
         /// Thrown if node to delete does not have only a right subtree.
         /// </exception>
-        protected virtual void NodeWithRightSubnodeDeletion(TreeNode toDelete)
+        private void NodeWithRightSubnodeDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
                 throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
@@ -556,7 +534,7 @@ namespace Algodat_AVLTree
         /// <exception cref="ArgumentException">
         /// Thrown if node to delete does not have a subtree on each of its sides.
         /// </exception>
-        protected virtual void NodeWithBothSubnodesDeletion(TreeNode toDelete)
+        private void NodeWithBothSubnodesDeletion(TreeNode toDelete)
         {
             if (toDelete == null)
                 throw new ArgumentNullException(nameof(toDelete), "Node to delete must not be null.");
