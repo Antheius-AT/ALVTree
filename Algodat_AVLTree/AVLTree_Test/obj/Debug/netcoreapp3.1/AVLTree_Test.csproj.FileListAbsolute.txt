@@ -1,4 +1,3 @@
-F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\AVLTree_Test\bin\Debug\netcoreapp3.1\Algodat_AVLTree.exe
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\AVLTree_Test\bin\Debug\netcoreapp3.1\NUnit3.TestAdapter.dll
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\AVLTree_Test\bin\Debug\netcoreapp3.1\NUnit3.TestAdapter.pdb
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\AVLTree_Test\bin\Debug\netcoreapp3.1\nunit.engine.dll

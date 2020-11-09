@@ -1,7 +1,4 @@
-F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.exe
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.deps.json
-F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.runtimeconfig.json
-F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.runtimeconfig.dev.json
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.dll
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\bin\Debug\netcoreapp3.1\Algodat_AVLTree.pdb
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.csproj.CoreCompileInputs.cache
@@ -9,4 +6,3 @@ F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLT
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.AssemblyInfo.cs
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.dll
 F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.pdb
-F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.genruntimeconfig.cache

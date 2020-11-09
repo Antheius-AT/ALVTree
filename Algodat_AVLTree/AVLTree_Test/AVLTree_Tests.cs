@@ -183,6 +183,7 @@ namespace AVLTree_Test
         [TestCase(100, 100, 99, 0, 50)]
         [TestCase(10)]
         [TestCase(10, 10, 20, 50, 55, 5, 15)]
+        [TestCase(10, 10, 20, 50, 55, 5, 15, 7)]
         [Test]
         public void Does_Deleting_Node_Remove_Node_From_Tree(int toDelete, params int[] values)
         {

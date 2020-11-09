@@ -545,11 +545,14 @@ namespace Algodat_AVLTree
             var greatestSubtreeNode = this.GetSubtreeMaximum(toDelete.LeftSubNode);
 
             toDelete.Content = greatestSubtreeNode.Content;
-            greatestSubtreeNode.ParentNode.RightSubNode = greatestSubtreeNode.LeftSubNode;
 
-            if (greatestSubtreeNode.LeftSubNode != null)
+            if (greatestSubtreeNode.ParentNode == toDelete)
             {
-                greatestSubtreeNode.LeftSubNode.ParentNode = greatestSubtreeNode.ParentNode;
+                toDelete.LeftSubNode = null;
+            }
+            else
+            {
+                greatestSubtreeNode.ParentNode.RightSubNode = null;
             }
 
             greatestSubtreeNode.ParentNode = null;
