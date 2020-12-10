@@ -177,6 +177,40 @@ namespace AVLTree_Test
             Assert.AreEqual(traversed, values.OrderBy(p => p));
         }
 
+        [TestCase(5, 8, 5, 10, 4, 4, 4)]
+        [Test]
+        public void DoesTraverseWork_PostOrder(params int[] values)
+        {
+            foreach (var item in values)
+            {
+                this.tree.Insert(item);
+            }
+
+            var traversed = this.tree.Traverse(TraverseOrder.PostOrder);
+            var control = new List<int>()
+            {
+                4, 4, 4, 5, 5, 10, 8
+            };
+
+            Assert.AreEqual(traversed, control);
+        }
+
+        [TestCase(5, 8, 10, 20, 3, 2, 2, 2, 8)]
+        [Test]
+        public void DoesTraverseWork_PreOrder(params int[] values)
+        {
+            foreach (var item in values)
+            {
+                this.tree.Insert(item);
+            }
+
+            var traversed = this.tree.Traverse(TraverseOrder.PreOrder);
+            var control = new List<int>
+            {
+                8, 2, 5, 3, 20, 10
+            };
+        }
+
         [TestCase(5, 5, 5, 5, 5, 5, 5, 10)]
         [TestCase(10, 22, -5, -100, 0, 0, -5, 50)]
         [TestCase(5, 22, 10, 3, 100, 50, -100, 3, 3, 5, 10, 5)]

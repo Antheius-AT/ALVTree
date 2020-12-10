@@ -1,36 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj": {}
+    "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj": {}
   },
   "projects": {
-    "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj": {
+    "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj",
+        "projectUniqueName": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj",
         "projectName": "Algodat_AVLTree",
-        "projectPath": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj",
-        "packagesPath": "C:\\Users\\Grego\\.nuget\\packages\\",
-        "outputPath": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\obj\\",
+        "projectPath": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj",
+        "packagesPath": "C:\\Users\\107732\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Grego\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\107732\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://fotec.pkgs.visualstudio.com/_packaging/BissDevOps/nuget/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -42,6 +42,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -57,40 +58,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj": {
+    "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj",
+        "projectUniqueName": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj",
         "projectName": "AVLTree_Test",
-        "projectPath": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj",
-        "packagesPath": "C:\\Users\\Grego\\.nuget\\packages\\",
-        "outputPath": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\obj\\",
+        "projectPath": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\AVLTree_Test.csproj",
+        "packagesPath": "C:\\Users\\107732\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\AVLTree_Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Grego\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\107732\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://fotec.pkgs.visualstudio.com/_packaging/BissDevOps/nuget/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj": {
-                "projectPath": "F:\\FH_Stuff\\3_Semester\\AlgoDat\\Hausübungen\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj"
+              "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj": {
+                "projectPath": "C:\\Users\\107732\\OneDrive - FHWN\\Desktop\\FH\\3.Semester\\AlgoDat\\AlgoDatHomeworks\\ALVTree\\Algodat_AVLTree\\Algodat_AVLTree\\Algodat_AVLTree.csproj"
               }
             }
           }
@@ -103,6 +104,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -132,7 +134,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

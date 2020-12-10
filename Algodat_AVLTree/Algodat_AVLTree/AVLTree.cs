@@ -1,8 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="AVLTree.cs" company="FHWN">
+//     Copyright (c) FHWN. All rights reserved.
+// </copyright>
+// <author>Gregor Faiman</author>
+//-----------------------------------------------------------------------
 namespace Algodat_AVLTree
 {
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// This class represents an AVL tree, which is a type of self balancing binary tree.
+    /// </summary>
     public class AVLTree
     {
         /// <summary>

@@ -1,9 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="TreeNode.cs" company="FHWN">
+//     Copyright (c) FHWN. All rights reserved.
+// </copyright>
+// <author>Gregor Faiman</author>
+//-----------------------------------------------------------------------
 namespace Algodat_AVLTree
 {
+    using System;
+
     /// <summary>
     /// Represent a tree node.
     /// </summary>
@@ -98,11 +102,6 @@ namespace Algodat_AVLTree
 
                 this.contentCount = value;
             }
-        }
-
-        public override string ToString()
-        {
-            return $"Content: {this.Content}, Content count: {this.ContentCount}, BalanceFactor: {this.BalanceFactor}";
         }
 
         /// <summary>
