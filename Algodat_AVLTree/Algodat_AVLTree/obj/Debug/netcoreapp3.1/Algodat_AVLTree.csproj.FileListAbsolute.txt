@@ -15,3 +15,4 @@ C:\Users\107732\OneDrive - FHWN\Desktop\FH\3.Semester\AlgoDat\AlgoDatHomeworks\A
 C:\Users\107732\OneDrive - FHWN\Desktop\FH\3.Semester\AlgoDat\AlgoDatHomeworks\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.csproj.CoreCompileInputs.cache
 C:\Users\107732\OneDrive - FHWN\Desktop\FH\3.Semester\AlgoDat\AlgoDatHomeworks\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.dll
 C:\Users\107732\OneDrive - FHWN\Desktop\FH\3.Semester\AlgoDat\AlgoDatHomeworks\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.pdb
+F:\FH_Stuff\3_Semester\AlgoDat\Hausübungen\ALVTree\Algodat_AVLTree\Algodat_AVLTree\obj\Debug\netcoreapp3.1\Algodat_AVLTree.csprojAssemblyReference.cache
